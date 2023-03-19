@@ -1,10 +1,41 @@
 const mysql = require('mysql');
-const config = require('../../config.json');
+const config = require('../../config/config.json');
 
-// Create MySQL connection
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'username',
-    password: 'password',
-    database: 'database_name',
+const {DataTypes} = require('sequelize');
+const sequelize = require('../../config/database');
+
+//sequelize.connectToDB();
+
+const User = sequelize.define('user', {
+    id : {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    }, 
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    familyName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    profilePicture: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}, {
+    timestamps: true,
+    tableName: 'users'
 });
+
+module.exports = User;
