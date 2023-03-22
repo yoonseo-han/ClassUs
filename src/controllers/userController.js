@@ -4,11 +4,10 @@ const {User} = require('../models/user');
 const userController = {
     // Handle user creation
     createUser: async(req, res) => {
-        console.log(req.body);
         // Get name, email, family name, profile picture from request
         // Information input from client
         const { name, email, familyName, profilePicture } = req.body;
-        
+        console.log(User);
         // Use sequelize function to find record
         User.create({
             name,
