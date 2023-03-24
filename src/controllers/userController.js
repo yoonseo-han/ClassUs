@@ -1,5 +1,5 @@
 //Functions related to user 
-const {User} = require('../models/user');
+const User = require('../models/user');
 
 const userController = {
     // Handle user creation
@@ -7,13 +7,15 @@ const userController = {
         // Get name, email, family name, profile picture from request
         // Information input from client
         const { name, email, familyName, profilePicture } = req.body;
-        console.log(User);
+        //console.log(typeof(User));
         // Use sequelize function to find record
-        User.create({
-            name,
-            email,
-            familyName,
-            profilePicture
+        User.sync({force: true}).then(() => {
+            return User.create({
+                name,
+                email,
+                familyName,
+                profilePicture
+            })
         })
         .then(user => {
             res.status(201).json(user);
