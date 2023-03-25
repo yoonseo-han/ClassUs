@@ -6,7 +6,7 @@ const userController = require('../controllers/userController');
 router.post('/', userController.createUser);
 
 // Route to get user profile by ID
-//router.get('/:userId', userController.getUserById);
+router.get('/:userId', userController.getUserById);
 
 // Route to update user profile by ID
 //router.put('/:userId', userController.updateUserById);
