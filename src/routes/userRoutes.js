@@ -9,6 +9,6 @@ router.post('/', userController.createUser);
 router.get('/:id', userController.getUserById);
 
 // Route to update user profile by ID
-//router.put('/:userId', userController.updateUserById);
+router.put('/:id', userController.updateUserById);
 
 module.exports = router;

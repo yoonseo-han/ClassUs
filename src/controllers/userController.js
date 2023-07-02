@@ -40,6 +40,35 @@ const userController = {
             console.error(err);
             return res.status(500).json({ message: 'Server error' });
         }
+    },
+
+    //Update user based on id
+    updateUserById: async(req, res) => {
+        try {
+            const userId = req.params.id;
+            const { name, email, familyName, profilePicture } = req.body;
+
+            // Find the user by ID: Primary Key
+            const user = await User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            //Update user profile
+            user.name = name;
+            user.email = email;
+            user.familyName = familyName;
+            user.profilePicture = profilePicture;
+
+            await user.save();
+
+            // Send the updated user profile as the response
+            res.status(200).json(user);
+        } catch(err) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
     }
 }
 
