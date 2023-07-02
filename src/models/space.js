@@ -1,5 +1,6 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../../config/database');
+const User = require('../models/user');
 
 const Space = sequelize.define('space', {
     space_id : {
@@ -18,10 +19,19 @@ const Space = sequelize.define('space', {
     space_role: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
+    //Foreign key definition
+    managerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 }, {
     timestamps: true,
     tableName: 'spaces'
 });
+
+//Define relationship between user and space: connected by managerID
+Space.belongsTo(User, { foreignKey: 'managerId' });
+User.hasMany(Space, { foreignKey: 'managerId' });
 
 module.exports = Space;
