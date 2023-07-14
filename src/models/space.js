@@ -27,7 +27,8 @@ const Space = sequelize.define('space', {
     },
 }, {
     timestamps: true,
-    tableName: 'spaces'
+    //Specify the custom table name here
+    tableName: 'space'
 });
 
 //Define relationship between user and space: connected by managerID
