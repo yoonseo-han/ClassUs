@@ -31,7 +31,7 @@ const spaceController = {
             // Find the space by ID and include the associated manager (user)
             const space = await Space.findByPk(spaceId, {
                 include: {
-                    association: 'Manager',
+                    association: 'manager',
                 },
             });
         
@@ -57,7 +57,7 @@ const spaceController = {
             // Find the space and check if the requesting user is the manager
             const space = await Space.findOne({
                 where: {
-                    id: spaceId,
+                    space_id: spaceId,
                     managerId: userId,
                 },
             });

@@ -32,7 +32,8 @@ const Space = sequelize.define('space', {
 });
 
 //Define relationship between user and space: connected by managerID
-Space.belongsTo(User, { foreignKey: 'managerId' });
-User.hasMany(Space, { foreignKey: 'managerId' });
+// 'as' option is used to define the association alias for both the belongsTo and hasMany associations
+Space.belongsTo(User, { foreignKey: 'managerId', as: 'manager' });
+User.hasMany(Space, { foreignKey: 'managerId', as: 'spaces' });
 
 module.exports = Space;
