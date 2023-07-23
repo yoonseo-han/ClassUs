@@ -4,8 +4,6 @@ const config = require('../../config/config.json');
 const {DataTypes} = require('sequelize');
 const sequelize = require('../../config/database');
 
-//sequelize.connectToDB();
-
 const User = sequelize.define('user', {
     id : {
         type: DataTypes.INTEGER,
@@ -37,5 +35,6 @@ const User = sequelize.define('user', {
     timestamps: true,
     tableName: 'users'
 });
+
 
 module.exports = User;

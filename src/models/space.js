@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../../config/database');
 const User = require('../models/user');
+const SpaceRole = require('./SpaceRole');
 
 const Space = sequelize.define('space', {
     space_id : {
@@ -32,8 +33,13 @@ const Space = sequelize.define('space', {
 });
 
 //Define relationship between user and space: connected by managerID
-// 'as' option is used to define the association alias for both the belongsTo and hasMany associations
-Space.belongsTo(User, { foreignKey: 'managerId', as: 'manager' });
-User.hasMany(Space, { foreignKey: 'managerId', as: 'spaces' });
+
+User.belongsToMany(Space, { through: 'UserSpace', foreignKey: 'userId' });
+Space.belongsToMany(User, { through: 'UserSpace', foreignKey: 'spaceId' });
+
+// //Define relation between space and space role
+// Space.hasMany(SpaceRole, { targetKey: 'name' });
+// // Define the one-to-many association from SpaceRole to Space
+// SpaceRole.hasMany(Space, { foreignKey: 'name' });
 
 module.exports = Space;
