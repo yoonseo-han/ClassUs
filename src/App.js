@@ -11,10 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Test for DB setup
-sequelize.sync();
+//sequelize.sync();
 
-// app.use('/users', userRoutes);
-// app.use('/space', spaceRoutes);
+app.use('/users', userRoutes);
+app.use('/space', spaceRoutes);
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');
