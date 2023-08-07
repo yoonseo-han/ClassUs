@@ -19,7 +19,7 @@ const Space = sequelize.define('space', {
     }, 
     space_role: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false, 
     },
     //Foreign key definition
     managerId: {
@@ -33,13 +33,11 @@ const Space = sequelize.define('space', {
 });
 
 //Define relationship between user and space: connected by managerID
-
 User.belongsToMany(Space, { through: 'UserSpace', foreignKey: 'userId' });
 Space.belongsToMany(User, { through: 'UserSpace', foreignKey: 'spaceId' });
 
-// //Define relation between space and space role
-// Space.hasMany(SpaceRole, { targetKey: 'name' });
-// // Define the one-to-many association from SpaceRole to Space
-// SpaceRole.hasMany(Space, { foreignKey: 'name' });
+//Define 1:N relation between space and user
+Space.hasMany(SpaceRole, {as: 'SpaceRoles'});
+Space.belongsTo(SpaceRole, { foreignKey: 'spaceRoleId' });
 
 module.exports = Space;
