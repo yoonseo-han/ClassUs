@@ -2,6 +2,20 @@ const {SpcaeRole} = require('../models/SpaceRole');
 const sequelize = require('../../config/database');
 
 const spaceRoleController = {
+    // Function to get the assigned RoleID of a User within a Space
+    getRoleIdByRoleName : async(roleName) => {
+        try {
+            //Return roleID based on role Name
+            const spaceRole = await SpaceRole.findOne({ where: { roleName } });
+            if (!spaceRole) {
+                throw new Error('Role not found.');
+            }
+            return spaceRole.id; // Return the roleId
+        } catch (err) {
+            throw new Error('Failed to get roleId by roleName.');
+        }
+    },
+
     //Function to create new SpaceRole for a space
     assignSpaceRoleToUser : async(req, res) => {
         try {
@@ -17,18 +31,23 @@ const spaceRoleController = {
                 throw new Error('User, Space, or SpaceRole not found.');
             }
 
+            let roleName; // Determine roleName based on userRole
             if(user.user_role == 'TA' || user.user_role == 'Professor') {
-                const roleId = 1;
-                await user.addSpace(space, { through: { roleId } });
+                roleName = 'Manager'; 
+            } else if(user.user_role == 'Student') {
+                roleName = 'Normal User'; 
             } else {
-                const roleId = 2;
-                await user.addSpace(space, { through: { roleId } });
+                throw new Error('Invalid user_role.');
             }
+            const roleId = await getRoleIdByRoleName(roleName);
+            await user.addSpace(space, { through: { roleId } });
+
             return true;
         } catch (error) {
             throw new Error('Failed to assign SpaceRole to User within Space.');
         }
     },
+
 }
 
 module.exports = spaceRoleController;
