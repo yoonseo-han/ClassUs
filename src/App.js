@@ -24,15 +24,19 @@ const connection = mysql.createConnection({
 
 // Run create database statement: Create DB called ClassUs
 connection.query(
+    `DROP DATABASE IF EXISTS ClassUs`,
+    function (err, results) {
+        console.log(results);
+        console.log(err);
+    }
+);
+connection.query(
     `CREATE DATABASE IF NOT EXISTS ClassUs`,
     function (err, results) {
         console.log(results);
         console.log(err);
     }
 );
-
-console.log("TEST123");
-console.log(config.database);
 
 //DB connection
 sequelize.sync();
