@@ -10,8 +10,32 @@ const sequelize = require('../config/database');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//Test for DB setup
-//sequelize.sync();
+const config = require(__dirname + '/../config/config.json')["development"];
+
+//Create connection and also setup DB
+const mysql = require("mysql2");
+
+// Open the connection to MySQL server
+const connection = mysql.createConnection({
+    host: config.host,
+    user: config.username,
+    password: config.password,
+});
+
+// Run create database statement: Create DB called ClassUs
+connection.query(
+    `CREATE DATABASE IF NOT EXISTS ClassUs`,
+    function (err, results) {
+        console.log(results);
+        console.log(err);
+    }
+);
+
+console.log("TEST123");
+console.log(config.database);
+
+//DB connection
+sequelize.sync();
 
 app.use('/users', userRoutes);
 app.use('/space', spaceRoutes);
