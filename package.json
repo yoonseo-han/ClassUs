@@ -1,0 +1,21 @@
+{
+  "name": "classus",
+  "version": "1.0.0",
+  "description": "Class Us Backend Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "start",
+    "start": "nodemon ./src/App.js"
+  },
+  "author": "Yoonseo Han",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.0",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.29.3"
+  }
+}
